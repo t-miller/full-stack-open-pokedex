@@ -34,3 +34,4 @@ jobs:
           heroku_app_name: "pokemon-openstack"
           heroku_email: "tyler.rw.miller@gmail.com"
           healthcheck: "https://pokemon-openstack.herokuapp.com/health"
+          rollbackonhealthcheckfailed: true
