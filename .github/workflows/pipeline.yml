@@ -46,12 +46,10 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           DEFAULT_BUMP: "patch"
-      - uses: 8398a7/action-slack@v3
-      - name: Push success Slack notification
-        with:
-          status: ${{ job.status }}
-          if: ${{ job.status == 'failure' }}
-          fields: repo,message,commit,author,took
-        env:
-          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
-        if: always()
+        - uses: actions/checkout@v2
+        - name: Slack Notification
+          uses: rtCamp/action-slack-notify@v2
+          env:
+            SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+            SLACK_COLOR: ${{ job.status }}
+            MSG_MINIMAL: ${{ job.status == 'success' }}
