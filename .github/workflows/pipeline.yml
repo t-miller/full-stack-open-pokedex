@@ -48,6 +48,7 @@ jobs:
           DEFAULT_BUMP: "patch"
       - uses: actions/checkout@v2
       - name: Slack Notification
+        if: ${{ github.event_name == 'push' && !contains(join(github.event.commits.*.message), '#skip') }}
         uses: rtCamp/action-slack-notify@v2
         env:
           SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}
