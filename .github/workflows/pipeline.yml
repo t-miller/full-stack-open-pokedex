@@ -46,8 +46,8 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           DEFAULT_BUMP: "patch"
-      - name: Push success Slack notification
       - uses: 8398a7/action-slack@v3
+      - name: Push success Slack notification
         with:
           status: ${{ job.status }}
           if: ${{ job.status == 'failure' }}
