@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-18.04
     steps:
       - uses: actions/checkout@v2
-      - name: gihub context
+      - name: github context
         env:
           GITHUB_CONTEXT: ${{ toJson(github) }}
         run: echo "$GITHUB_CONTEXT"
@@ -26,3 +26,19 @@ jobs:
         env:
           CONTAINS: ${{contains(github.event.commits.*.message, '#skip')}}
         run: echo "$CONTAINS"
+      - name: boolean expression (just contains)
+        env:
+          PUSH_CONTAINS: ${{ github.event_name == 'push' && !contains(github.event.commits.*.message, '#skip') }}
+        run: echo "$PUSH_CONTAINS"
+      - name: joined array
+        env:
+          JOINED_ARR: ${{join(github.event.commits.*.message)}}
+        run: echo "$JOINED_ARR"
+      - name: contains joined array
+        env:
+          CONTAINS_JOINED: ${{contains(join(github.event.commits.*.message), '#skip')}}
+        run: echo "$CONTAINS_JOINED"
+      - name: boolean expression (join & contains)
+        env:
+          PUSH_JOIN_CONTAINS: ${{ github.event_name == 'push' && !contains(join(github.event.commits.*.message), '#skip') }}
+        run: echo "$PUSH_JOIN_CONTAINS"
